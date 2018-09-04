@@ -88,7 +88,67 @@ def tarantula():
         boo_tool(root, classes[3][0], lambda: terry(classes[3]), LEFT).boof()
         boo_tool(root, classes[4][0], lambda: terry(classes[4]), LEFT).boof()
 
+
+
+'''
+Function: To get the average for the course and store it on the end of global
+          classes
+Parameters: None
+Returns: None
+'''
+def avg():
+    global classes
+    den = 0
+    nom = 0
+    
+    for item in classes:
+        for it in item:
+            if len(it) > 1:
+                nom += (it[0] * it[1])
+                den += it[1]
+            else:
+                pass
+        if len(item[-1]) == 2:
+            item.append(nom / den)
+        elif len(item[-1]) == 1:
+            item[-1].pop()
+            item.append(nom / den)
+    study()
         
+
+
+
+'''
+Function: To calculate the study time per course and print out how much
+          time they should allocate to each course.
+Parameters: None
+Returns: None
+'''
+def study():
+    
+    global classes
+    
+    #sets up variables
+    hours = int(getInp())
+    reducer = 0
+    div = 0
+    nerve = 0.0
+    total = 0
+    reducer = len(classes)
+    for item in classes:
+        total += item[-1] 
+    total = total / reducer
+    div = hours / reducer
+    
+    
+    #Gets the amount of time per course alloted, and then appends it to the
+    #list
+    for item in classes:
+        nerve = item.pop()
+        reducer = ((2 - (nerve / total)) * div)
+        item.append(reducer)
+
+
         
 '''
 Function: to delete a mark from a course in the registry
@@ -153,7 +213,7 @@ Function: Gets input from the user
 Parameters: None
 Returns: string - a string of the users input
 '''
-def get_inp():
+def getInp():
     global e
     string = e.get()
     return string
@@ -171,7 +231,7 @@ def terry(cuc):
     pur = []
     ls = []
     global classes, tem
-    string = get_inp()
+    string = getInp()
     
     #This error checks to make sure the user has input classes before
     if len(classes) == 0:
@@ -227,6 +287,7 @@ toolbar = Frame(root, bg = "grey")
 boo_tool(toolbar, "Quit", root.destroy, RIGHT).boof()
 boo_tool(toolbar, "Add Marks to Courses", tarantula, LEFT).boof()
 boo_tool(toolbar, "Add Course", printtext, LEFT).boof()
+boo_tool(toolbar, "Input Available Study Time", avg, LEFT).boof()
 boo_tool(toolbar, "Remove Mark", dinosaur, RIGHT).boof()
 boo_tool(toolbar, "Remove Course", trex, RIGHT).boof()
 boo_tool(root, "The format to Enter a class is 'Course',\
