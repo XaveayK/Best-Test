@@ -8,10 +8,6 @@ between courses with different marks
 
 
 
-from graphics import *
-
-
-
 '''
 Function: To get the users marks for a single course and determine their current
           weighted average

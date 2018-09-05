@@ -1,7 +1,8 @@
 from tkinter import *
 
 
-
+BOOTS = []
+STOOB = []
 root = Tk()
 w = root.winfo_screenwidth()
 h = root.winfo_screenheight()
@@ -31,6 +32,7 @@ class boo_tool:
         boof = Button(self._local, text = self._text, command = self._comm)
         boof.pack(side = self._side, padx = self._padx, pady = self._pady)
         self._boof = boof
+        return boof
         
     def tx(self, xe, ye):
         self._x = xe
@@ -43,50 +45,133 @@ class boo_tool:
         self._xe = xe
         self._ye = ye
         self._boof.place(x = xe, y = ye)    
+    
+    def s2(self):
+        boof.destroy()
 
 
 
 '''
-Function: To open buttons for each course to add marks (view current courses)
+Function: To redraw all the courses on the right hand side and change their
+          functions
 Parameters: None
 Returns: None
 '''
-def tarantula():
+def reMoveMark():
     
-    #Gets a global variables, as perameters are hard pressed for tkinter
-    global tem
+    global STOOB, removeMark
     
-    #Sets up a button for each course dependant on how many courses there are
-    #utilizing lambda to pass variables through boo_tool as variables
-    #can't be passed through without it
+    removeMark = boo_tool(toolbar, "Cancel", addMark, RIGHT).boof()
+    
     if len(classes) == 1:
-        boo_tool(root, classes[0][0], lambda: terry(classes[0]), LEFT).boof()
-    
-    #For two classes
+        a = boo_tool(root, classes[0][0], revTerry, RIGHT).boof()
+        STOOB = [a]
+        
     elif len(classes) == 2:
-        boo_tool(root, classes[0][0], lambda: terry(classes[0]), LEFT).boof()
-        boo_tool(root, classes[1][0], lambda: terry(classes[1]), LEFT).boof()
-    
-    #For three classes
+        a = boo_tool(root, classes[0][0], revTerry, RIGHT).boof()
+        b = boo_tool(root, classes[1][0], revTerry, RIGHT).boof()
+        STOOB = [a, b]
+        
     elif len(classes) == 3:
-        boo_tool(root, classes[0][0], lambda: terry(classes[0]), LEFT).boof()
-        boo_tool(root, classes[1][0], lambda: terry(classes[1]), LEFT).boof()
-        boo_tool(root, classes[2][0], lambda: terry(classes[2]), LEFT).boof()
-    
-    #for four classes
+        a = boo_tool(root, classes[0][0], revTerry, RIGHT).boof()
+        b = boo_tool(root, classes[1][0], revTerry, RIGHT).boof()
+        c = boo_tool(root, classes[2][0], revTerry, RIGHT).boof()
+        STOOB = [a, b, c]
+        
     elif len(classes) == 4:
-        boo_tool(root, classes[0][0], lambda: terry(classes[0]), LEFT).boof()
-        boo_tool(root, classes[1][0], lambda: terry(classes[1]), LEFT).boof()
-        boo_tool(root, classes[2][0], lambda: terry(classes[2]), LEFT).boof()
-        boo_tool(root, classes[3][0], lambda: terry(classes[3]), LEFT).boof()
+        a = boo_tool(root, classes[0][0], revTerry, RIGHT).boof()
+        b = boo_tool(root, classes[1][0], revTerry, RIGHT).boof()
+        c = boo_tool(root, classes[2][0], revTerry, RIGHT).boof()
+        d = boo_tool(root, classes[3][0], revTerry, RIGHT).boof()
+        STOOB = [a, b, c, d]
     
-    #For five classes
     elif len(classes) == 5:
-        boo_tool(root, classes[0][0], lambda: terry(classes[0]), LEFT).boof()
-        boo_tool(root, classes[1][0], lambda: terry(classes[1]), LEFT).boof()
-        boo_tool(root, classes[2][0], lambda: terry(classes[2]), LEFT).boof()
-        boo_tool(root, classes[3][0], lambda: terry(classes[3]), LEFT).boof()
-        boo_tool(root, classes[4][0], lambda: terry(classes[4]), LEFT).boof()
+        a = boo_tool(root, classes[0][0], revTerry, RIGHT).boof()
+        b = boo_tool(root, classes[1][0], revTerry, RIGHT).boof()
+        c = boo_tool(root, classes[2][0], revTerry, RIGHT).boof()
+        d = boo_tool(root, classes[3][0], revTerry, RIGHT).boof()
+        e = boo_tool(root, classes[4][0], revTerry, RIGHT).boof()
+        STOOB = [a, b, c, d, e]
+
+
+
+'''
+Function: To switch the courses back into add move, and make removemark button
+          again
+Parameters: None
+Returns: None
+'''
+def addMark():
+    global removeMark, BOOTS, STOOB
+    removeMark.destroy()
+    
+    removeMark = boo_tool(toolbar, "Remove Mark", helpMyAss, RIGHT).boof()
+    
+    for item in STOOB:
+        item.destroy()
+    STOOB.clear()
+    
+    if len(classes) == 1:
+        a = boo_tool(root, classes[0][0], lambda: terry(classes[0][0]), LEFT).boof()
+        BOOTS = [a]
+        
+    elif len(classes) == 2:
+        a = boo_tool(root, classes[0][0], lambda: terry(classes[0][0]), LEFT).boof()
+        b = boo_tool(root, classes[1][0], lambda: terry(classes[1][0]), LEFT).boof()
+        BOOTS = [a, b]
+        
+    elif len(classes) == 3:
+        a = boo_tool(root, classes[0][0], lambda: terry(classes[0][0]), LEFT).boof()
+        b = boo_tool(root, classes[1][0], lambda: terry(classes[1][0]), LEFT).boof()
+        c = boo_tool(root, classes[2][0], lambda: terry(classes[2][0]), LEFT).boof()
+        BOOTS = [a, b, c]
+        
+    elif len(classes) == 4:
+        a = boo_tool(root, classes[0][0], lambda: terry(classes[0][0]), LEFT).boof()
+        b = boo_tool(root, classes[1][0], lambda: terry(classes[1][0]), LEFT).boof()
+        c = boo_tool(root, classes[2][0], lambda: terry(classes[2][0]), LEFT).boof()        
+        d = boo_tool(root, classes[3][0], lambda: terry(classes[3][0]), LEFT).boof()
+        BOOTS = [a, b, c, d]
+        
+    elif len(classes) == 5:
+        a = boo_tool(root, classes[0][0], lambda: terry(classes[0][0]), LEFT).boof()
+        b = boo_tool(root, classes[1][0], lambda: terry(classes[1][0]), LEFT).boof()
+        c = boo_tool(root, classes[2][0], lambda: terry(classes[2][0]), LEFT).boof()        
+        d = boo_tool(root, classes[3][0], lambda: terry(classes[3][0]), LEFT).boof()        
+        e = boo_tool(root, classes[4][0], lambda: terry(classes[4][0]), LEFT).boof()
+        BOOTS = [a, b, c, d, e]    
+
+
+
+'''
+Function: To remove a mark from a course when the button is clicked
+Parameters: None
+Returns: None
+'''
+def revTerry():
+    
+    #Sets up variables for later use
+    string = ''
+    pur = []
+    ls = []
+    global classes
+    string = getInp()
+    pur = string.split(' ')
+    for item in pur:
+        ls.append(int(item))
+    
+    #This error checks to make sure the user has input classes before
+    if len(classes) == 0:
+        print("Don't work")
+        return
+    
+    #checks which course the mark is meant to be in, and then puts the mark
+    #in that course
+    for item in classes:
+        for ite in item:
+            if isinstance(ite, list):
+                if ls[0] == ite[0] and ls[1] == ite[1]:
+                    item.remove(ite)
 
 
 
@@ -103,9 +188,9 @@ def avg():
     
     for item in classes:
         for it in item:
-            if len(it) > 1:
-                nom += (it[0] * it[1])
-                den += it[1]
+            if (len(it) > 1) and isinstance(it, list):
+                nom += (int(it[0]) * int(it[1]))
+                den += int(it[1])
             else:
                 pass
         if len(item[-1]) == 2:
@@ -149,7 +234,27 @@ def study():
         item.append(reducer)
 
 
-        
+
+'''
+Function: Delete all of the course buttons, and remove mark button
+          then redraws them with different functions
+Parameters: None
+Returns: None
+'''
+def helpMyAss():
+    
+    global BOOTS, removeMark
+    
+    for item in BOOTS:
+        item.destroy()
+    BOOTS.clear()
+    removeMark.destroy()
+    
+    reMoveMark()
+    
+
+
+
 '''
 Function: to delete a mark from a course in the registry
 Parameters: None
@@ -178,11 +283,13 @@ def dinosaur():
                 if itm.isdigit():
                     ls.append(int(itm))
             item.remove(ls)    
+            
 
 
 
 '''
-Function: Top remove a course from the list
+Function: To remove a course from the list, trex is because the trex is eating
+          the buttons
 Parameters: None
 Returns: None
 '''
@@ -191,7 +298,8 @@ def trex():
     #Sets up variables
     ls = []
     pur = []
-    global e, classes
+    num = 0
+    global e, classes, BOOTS
     
     #Error checks to make sure the user has classes inputted
     if len(classes) == 0:
@@ -202,9 +310,12 @@ def trex():
     #trying to delete
     string = e.get()
     for item in classes:
+        num += 1
         for i in item:
             if string in i:
                 classes.remove(item)
+    BOOTS[num - 1].destroy()
+    BOOTS.pop(num - 1)
 
 
 
@@ -222,15 +333,16 @@ def getInp():
 
 '''
 Function: To add marks to a course in the classes data structure
-Parameters: None
+Parameters: cuc - the string of the button that is clicked
 Returns: None
 '''
 def terry(cuc):
     
     #Sets up variables for later use
+    string = ''
     pur = []
     ls = []
-    global classes, tem
+    global classes
     string = getInp()
     
     #This error checks to make sure the user has input classes before
@@ -241,15 +353,13 @@ def terry(cuc):
     #checks which course the mark is meant to be in, and then puts the mark
     #in that course
     for item in classes:
-        if item == cuc:
+        if item[0] == cuc:
             pur = string.split(' ')
             for itm in pur:
                 if itm.isdigit():
                     ls.append(int(itm))
                     
             item.append(ls)
-    
-    #Resets the global variable
     
  
 
@@ -263,17 +373,23 @@ def printtext():
     
     #Sets up variables
     LIST = []
-    global e, classes
+    global e, classes, BOOTS
     string = e.get()
     
     #error checks to make sure the user hasn't tried to input the course prior
     for item in classes:
         if string in item:
             return
+    if len(string) == 0:
+        return
         
     #Makes a list for the course for later appending of the marks to it
     LIST.append(string)
     classes.append(LIST)
+    gayhomome = Button(root, text = string, command = lambda: terry(string))
+    gayhomome.pack(side = LEFT)
+    BOOTS.append(gayhomome)
+    
     
     
 #Creates the entry point
@@ -282,21 +398,16 @@ e.pack()
 e.focus_set()
 
 
+
 #Sets up the tool bars
 toolbar = Frame(root, bg = "grey")
 boo_tool(toolbar, "Quit", root.destroy, RIGHT).boof()
-boo_tool(toolbar, "Add Marks to Courses", tarantula, LEFT).boof()
 boo_tool(toolbar, "Add Course", printtext, LEFT).boof()
 boo_tool(toolbar, "Input Available Study Time", avg, LEFT).boof()
-boo_tool(toolbar, "Remove Mark", dinosaur, RIGHT).boof()
-boo_tool(toolbar, "Remove Course", trex, RIGHT).boof()
+a = boo_tool(toolbar, "Remove Course", trex, RIGHT).boof()
+removeMark = boo_tool(toolbar, "Remove Mark", helpMyAss, RIGHT).boof()
 boo_tool(root, "The format to Enter a class is 'Course',\
 marks are inputted as 'mark weight'.", None, BOTTOM).tx(40, 5)
 toolbar.pack(side = TOP, fill = X)
 
-
-
-'''
-Toolbar menu items
-'''
 root.mainloop()
