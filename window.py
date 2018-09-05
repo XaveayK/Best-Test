@@ -274,6 +274,7 @@ def dinosaur():
     
     #Removes a mark from a course
     string = e.get()
+    
     for item in classes:
         if item[0] in string:
             string = string.replace(item[0], '')
@@ -282,8 +283,7 @@ def dinosaur():
             for itm in string:
                 if itm.isdigit():
                     ls.append(int(itm))
-            item.remove(ls)    
-            
+            item.remove(ls)
 
 
 
@@ -299,6 +299,7 @@ def trex():
     ls = []
     pur = []
     num = 0
+    a = 0
     global e, classes, BOOTS
     
     #Error checks to make sure the user has classes inputted
@@ -308,14 +309,18 @@ def trex():
     
     #Gets the string input, and then runs through which course the user is
     #trying to delete
-    string = e.get()
+    string = getInp()
     for item in classes:
         num += 1
-        for i in item:
-            if string in i:
-                classes.remove(item)
-    BOOTS[num - 1].destroy()
-    BOOTS.pop(num - 1)
+        if string == item[0]:
+            classes.remove(item)
+            a = 1
+        else:
+            return None
+        
+    if num > 1 and a == 1:
+        BOOTS[num - 1].destroy()
+        BOOTS.pop(num - 1)
 
 
 
@@ -407,7 +412,11 @@ boo_tool(toolbar, "Input Available Study Time", avg, LEFT).boof()
 a = boo_tool(toolbar, "Remove Course", trex, RIGHT).boof()
 removeMark = boo_tool(toolbar, "Remove Mark", helpMyAss, RIGHT).boof()
 boo_tool(root, "The format to Enter a class is 'Course',\
-marks are inputted as 'mark weight'.", None, BOTTOM).tx(40, 5)
+marks are inputted as 'mark weight', to get rid of a\
+course the template is to type 'course and then remove\
+ course button. For removing a mark, you hit 'remove\
+mark' and then type in the mark you want rem\
+oved, and then click the course to remove it from", None, BOTTOM).tx(80, 4)
 toolbar.pack(side = TOP, fill = X)
 
 root.mainloop()
