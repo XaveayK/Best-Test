@@ -386,9 +386,9 @@ def printtext():
     #Makes a list for the course for later appending of the marks to it
     LIST.append(string)
     classes.append(LIST)
-    gayhomome = Button(root, text = string, command = lambda: terry(string))
-    gayhomome.pack(side = LEFT)
-    BOOTS.append(gayhomome)
+    g = Button(root, text = string, command = lambda: terry(string))
+    g.pack(side = LEFT)
+    BOOTS.append(g)
     
     
     
