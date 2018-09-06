@@ -1,18 +1,6 @@
 from tkinter import *
 
 
-BOOTS = []
-STOOB = []
-root = Tk()
-w = root.winfo_screenwidth()
-h = root.winfo_screenheight()
-strang = str(w//2) + 'x' + str(h//2)
-root.geometry(strang)
-root.resizable(0, 0)
-classes = []
-tem = ''
-
-
 
 '''
 Compresses making buttons into a single utility for use, because buttons
@@ -34,17 +22,13 @@ class boo_tool:
         self._boof = boof
         return boof
         
-    def tx(self, xe, ye):
-        self._x = xe
-        self._y = ye
-        txt = Text(self._local, height = self._y, width = self._x)
+    def tx(self, x, y):
+        txt = Text(self._local, height = y, width = x)
         txt.pack(side = self._side)
         txt.insert(END, self._text)
     
-    def plak(self, xe, ye):
-        self._xe = xe
-        self._ye = ye
-        self._boof.place(x = xe, y = ye)    
+    def plak(self, x, y):
+        self._boof.place(x = x, y = y)    
     
     def s2(self):
         boof.destroy()
@@ -54,7 +38,8 @@ class boo_tool:
 '''
 Function: To redraw all the courses on the right hand side and change their
           functions
-Parameters: None
+Parameters: GLOBAL removeMark - the button for remove mark that changes to cancel 
+            GLOBAL STOOB - Reverse of the list of BOOTS
 Returns: None
 '''
 def reMoveMark():
@@ -98,7 +83,9 @@ def reMoveMark():
 '''
 Function: To switch the courses back into add move, and make removemark button
           again
-Parameters: None
+Parameters: GLOBAL removeMark - the button for remove mark that changes to cancel 
+            GLOBAL BOOTS - a list of course buttons
+            GLOBAL STOOB - Reverse of the list of BOOTS
 Returns: None
 '''
 def addMark():
@@ -145,7 +132,7 @@ def addMark():
 
 '''
 Function: To remove a mark from a course when the button is clicked
-Parameters: None
+Parameters: GLOBAL classes - a list of courses with marks and study time
 Returns: None
 '''
 def revTerry():
@@ -178,7 +165,7 @@ def revTerry():
 '''
 Function: To get the average for the course and store it on the end of global
           classes
-Parameters: None
+Parameters: GLOBAL classes - a list of courses with marks and study time
 Returns: None
 '''
 def avg():
@@ -206,7 +193,7 @@ def avg():
 '''
 Function: To calculate the study time per course and print out how much
           time they should allocate to each course.
-Parameters: None
+Parameters: GLOBAL classes - a list of courses with marks and study time
 Returns: None
 '''
 def study():
@@ -238,7 +225,8 @@ def study():
 '''
 Function: Delete all of the course buttons, and remove mark button
           then redraws them with different functions
-Parameters: None
+Parameters: GLOBAL BOOTS - the list of course buttons
+            GLOBAL removeMark - the button for removeMark that changes to cancel
 Returns: None
 '''
 def helpMyAss():
@@ -257,7 +245,7 @@ def helpMyAss():
 
 '''
 Function: to delete a mark from a course in the registry
-Parameters: None
+Parameters: GLOBAL classes - a list of courses with marks and study time 
 Returns: None
 '''
 def dinosaur():
@@ -265,7 +253,7 @@ def dinosaur():
     #sets up variables
     ls = []
     pur = []
-    global e, classes
+    global classes
     
     #Ensures the user has a class inputted
     if len(classes) == 0:
@@ -273,7 +261,7 @@ def dinosaur():
         return
     
     #Removes a mark from a course
-    string = e.get()
+    string = getInp()
     
     for item in classes:
         if item[0] in string:
@@ -290,7 +278,8 @@ def dinosaur():
 '''
 Function: To remove a course from the list, trex is because the trex is eating
           the buttons
-Parameters: None
+Parameters: GLOBAL classes - the list of courses with marks and time for study
+            GLOBAL BOOTS - the list of course buttons
 Returns: None
 '''
 def trex():
@@ -298,35 +287,52 @@ def trex():
     #Sets up variables
     ls = []
     pur = []
-    num = 0
-    a = 0
-    global e, classes, BOOTS
+    global classes, BOOTS
+    
+    string = getInp()
+    
     
     #Error checks to make sure the user has classes inputted
     if len(classes) == 0:
         print("Don't work")
         return
     
+    elif len(classes) == 1 and isinstance(classes[0], list) and classes[0][0] == string:
+        classes.pop()
+        BOOTS[0].destroy()
+        BOOTS.pop()
+        
+    
     #Gets the string input, and then runs through which course the user is
     #trying to delete
-    string = getInp()
-    for item in classes:
+    num = 0
+    a = 0
+    for i in classes:
         num += 1
-        if string == item[0]:
-            classes.remove(item)
+        n_string = i[0]
+        if string == n_string:
+            classes.remove(i)
             a = 1
-        else:
-            return None
+            break
+        elif string != n_string and num == len(classes):
+            break
+    if len(classes) > 0 and num == 1:
+        BOOTS[0].destroy()
+        BOOTS.pop(0)
+        num = 0
+        a = 0
         
-    if num > 1 and a == 1:
+    elif a == 1 and num > 1:
         BOOTS[num - 1].destroy()
         BOOTS.pop(num - 1)
+        num = 0
+        a = 0
 
 
 
 '''
 Function: Gets input from the user
-Parameters: None
+Parameters: GLOBAL e - the box where input is put
 Returns: string - a string of the users input
 '''
 def getInp():
@@ -339,6 +345,8 @@ def getInp():
 '''
 Function: To add marks to a course in the classes data structure
 Parameters: cuc - the string of the button that is clicked
+            GLOBAL classes - a list of courses with marks and the time to study
+                             for that class
 Returns: None
 '''
 def terry(cuc):
@@ -371,7 +379,9 @@ def terry(cuc):
 
 '''
 Function: To add a course to the data of classes
-Parameters: None
+Parameters: GLOBAL e - the box where the user inputs
+            GLOBAL classes - the list of courses with marks and study time
+            GLOBAL BOOTS - the list of buttons for courses
 Returns: None
 '''
 def printtext():
@@ -394,13 +404,27 @@ def printtext():
     g = Button(root, text = string, command = lambda: terry(string))
     g.pack(side = LEFT)
     BOOTS.append(g)
-    
-    
-    
+
+
+
+BOOTS = []
+STOOB = []
+classes = []
+tem = ''
+
+
 #Creates the entry point
+root = Tk()
 e = Entry(root)
 e.pack()
 e.focus_set()
+
+
+w = root.winfo_screenwidth()
+h = root.winfo_screenheight()
+strang = str(w//2) + 'x' + str(h//2)
+root.geometry(strang)
+root.resizable(0, 0)
 
 
 
@@ -409,7 +433,7 @@ toolbar = Frame(root, bg = "grey")
 boo_tool(toolbar, "Quit", root.destroy, RIGHT).boof()
 boo_tool(toolbar, "Add Course", printtext, LEFT).boof()
 boo_tool(toolbar, "Input Available Study Time", avg, LEFT).boof()
-a = boo_tool(toolbar, "Remove Course", trex, RIGHT).boof()
+boo_tool(toolbar, "Remove Course", trex, RIGHT).boof()
 removeMark = boo_tool(toolbar, "Remove Mark", helpMyAss, RIGHT).boof()
 boo_tool(root, "The format to Enter a class is 'Course',\
 marks are inputted as 'mark weight', to get rid of a\
@@ -417,6 +441,8 @@ course the template is to type 'course and then remove\
  course button. For removing a mark, you hit 'remove\
 mark' and then type in the mark you want rem\
 oved, and then click the course to remove it from", None, BOTTOM).tx(80, 4)
-toolbar.pack(side = TOP, fill = X)
+toolbar.pack(side = TOP, fill = X)    
+
+
 
 root.mainloop()
