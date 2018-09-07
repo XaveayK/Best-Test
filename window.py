@@ -343,6 +343,25 @@ def getInp():
 
 
 '''
+Function: To sort all the marks in the course by weight
+Parameters: GLOBAL classes - a list of courses with mark * weight and study time
+Returns: None
+'''
+def sortingMarks():
+    
+    global classes
+    
+    for items in range(len(classes)-1,0,-1):
+        for i in range(items):
+            if isinstance(items[i], list):
+                if classes[items][i][1] > classes[item][i+1][1]:
+                    temp = classes[items][i]
+                    classes[items][i] = classes[item][i+1]
+                    classes[items][i+1] = temp    
+
+
+
+'''
 Function: To add marks to a course in the classes data structure
 Parameters: cuc - the string of the button that is clicked
             GLOBAL classes - a list of courses with marks and the time to study
@@ -374,7 +393,8 @@ def terry(cuc):
                     
             item.append(ls)
     
- 
+    sortingMarks()
+            
 
 
 '''
